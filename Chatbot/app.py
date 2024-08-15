@@ -148,7 +148,7 @@ def prediction():
 
         # Get the crop name
         crop = crop_dict.get(prediction[0], "Unknown crop")
-        result = f"{crop} is the best crop to be cultivated right there."
+        result = f"{crop} is the best crop to be cultivated !"
         
         return jsonify(result=result)
     except Exception as e:
