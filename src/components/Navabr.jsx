@@ -12,7 +12,7 @@ const Navabr = () => {
       <Link to="/">AgroInnovate</Link>
       
       <div className="flex space-x-8">
-        <Weather />
+        <Link to ='/weather'> Weather</Link>
         <Link to="/soil-health">  {/* Link to the SoilHealth route */}
           Soil Health
         </Link>
