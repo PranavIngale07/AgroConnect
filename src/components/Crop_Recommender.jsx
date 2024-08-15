@@ -13,6 +13,9 @@ const CropRecommender = () => {
   });
 
   const [result, setResult] = useState("");
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(true);
 
   const handleChange = (e) => {
@@ -35,14 +38,17 @@ const CropRecommender = () => {
           },
         }
       );
-
+      setLoading(false);
       if (response.data.error) {
         setResult(`Error: ${response.data.error}`);
       } else {
         setResult(response.data.result);
       }
+      setShowForm(false);
     } catch (error) {
-      setResult(`Failed to fetch: ${error.message}`);
+      setLoading(false);
+      setError("There was an error making the request!");
+      setResult(`Failed to fetch crop recommendation: ${error.message}`);
       console.log(error.message);
     }
   };
@@ -57,128 +63,136 @@ const CropRecommender = () => {
           <p className="font-bold text-xl md:text-2xl mb-4 text-center text-black">
             Crop Recommender
           </p>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  pH:
-                </span>
-                <input
-                  type="text"
-                  placeholder="Enter pH"
-                  name="pH"
-                  value={formData.pH}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  Rainfall:
-                </span>
-                <input
-                  type="text"
-                  placeholder="Enter Rainfall in mm"
-                  name="Rainfall"
-                  value={formData.Rainfall}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  Humidity:
-                </span>
-                <input
-                  type="text"
-                  placeholder="Enter Humidity"
-                  name="Humidity"
-                  value={formData.Humidity}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  Nitrogen (N ppm):
-                </span>
-                <input
-                  type="text"
-                  placeholder="N ppm"
-                  name="Nitrogen"
-                  value={formData.Nitrogen}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  Phosphorus (P ppm):
-                </span>
-                <input
-                  type="text"
-                  placeholder="P ppm"
-                  name="Phosporus"
-                  value={formData.Phosporus}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  Potassium (K ppm):
-                </span>
-                <input
-                  type="text"
-                  placeholder="K ppm"
-                  name="Potassium"
-                  value={formData.Potassium}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <span className="label-text text-left block mb-1 text-black">
-                  Temperature:
-                </span>
-                <input
-                  type="text"
-                  placeholder="Enter Temperature"
-                  name="Temperature"
-                  value={formData.Temperature}
-                  onChange={handleChange}
-                  className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
-                />
-              </label>
-            </div>
-            <div className="md:col-span-2 flex justify-center">
-              <button
-                type="submit"
-                className="w-1/2 text-white py-2 px-4 rounded-md bg-teal-600 hover:bg-teal-700 transition duration-300"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+
+          {showForm ? (
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    pH:
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Enter pH"
+                    name="pH"
+                    value={formData.pH}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    Rainfall:
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Enter Rainfall in mm"
+                    name="Rainfall"
+                    value={formData.Rainfall}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    Humidity:
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Enter Humidity"
+                    name="Humidity"
+                    value={formData.Humidity}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    Nitrogen (N ppm):
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="N ppm"
+                    name="Nitrogen"
+                    value={formData.Nitrogen}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    Phosphorus (P ppm):
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="P ppm"
+                    name="Phosporus"
+                    value={formData.Phosporus}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    Potassium (K ppm):
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="K ppm"
+                    name="Potassium"
+                    value={formData.Potassium}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div>
+                <label className="form-control w-full">
+                  <span className="label-text text-left block mb-1 text-black">
+                    Temperature:
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Enter Temperature"
+                    name="Temperature"
+                    value={formData.Temperature}
+                    onChange={handleChange}
+                    className="border text-sm rounded-lg block w-full p-2.5 bg-white bg-opacity-20 backdrop-blur-lg text-black outline-none"
+                  />
+                </label>
+              </div>
+              <div className="md:col-span-2 flex justify-center">
+                <button
+                  type="submit"
+                  className="w-1/2 text-white py-2 px-4 rounded-md bg-teal-600 hover:bg-teal-700 transition duration-300"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          ) : (
+            <>
+              {result && (
+                <div className="mt-6 p-16 bg-gray-300 h-[200px] bg-opacity-50 text-black text-4xl  rounded-xl shadow-lg text-center">
+                  {result}
+                </div>
+              )}
+            </>
+          )}
         </div>
-      {/* {result && <div className="result">{result}</div>} */}
-      
-      {/*Output styling*/ }
-      <div className="bg-black w-[500px] h-[100px] rounded-xl">
-        
-      </div>
       </div>
     </>
   );
