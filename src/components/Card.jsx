@@ -2,8 +2,8 @@ import React from "react";
 
 const Card = () => {
   return (
-    <div className="bg-white bg-opacity-30 border-none outline-none rounded-lg shadow-lg p-6 max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-black">
+    <div className="bg-white bg-opacity-30 border-none outline-none rounded-xl shadow-lg p-6 w-[500px] h-[500px]">
+      <h2 className="text-4xl font-bold text-center text-black m-auto">
         Towards a better future
       </h2>
       <div className="flex justify-center mb-4 mt-8 md:mt-11">

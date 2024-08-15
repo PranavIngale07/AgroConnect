@@ -18,7 +18,7 @@ const FeedbackForm = () => {
     if (submitted) {
       const timeout = setTimeout(() => {
         navigate("/"); // Redirect to the main page after 3 seconds
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timeout); // Cleanup timeout if the component unmounts
     }
