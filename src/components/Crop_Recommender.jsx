@@ -202,7 +202,7 @@ const CropRecommender = () => {
                     src={farmer}
                     alt="Chat"
                     onClick={() => setIsChatOpen(!isChatOpen)}
-                    className="cursor-pointer w-[9rem] h-[9rem]"
+                    className="cursor-pointer w-44 h-44"
                 />
             </div>
         </div>
