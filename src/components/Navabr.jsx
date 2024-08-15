@@ -9,7 +9,7 @@ import Advisor from './Advisor';
 const Navabr = () => {
   return (
     <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-10 bg-white  backdrop:blur-md bg-opacity-20 text-black font-semibold">
-      <div>AgroInnovate</div>
+      <Link to="/">AgroInnovate</Link>
       
       <div className="flex space-x-8">
         <Weather />
