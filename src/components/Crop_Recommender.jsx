@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Navabr from "./Navabr";  // Ensure the correct import name
 
 const CropRecommender = () => {
   const [formData, setFormData] = useState({
@@ -55,8 +56,9 @@ const CropRecommender = () => {
 
   return (
     <>
+      <Navabr />
       <div
-        className="flex justify-center items-center min-h-screen bg-cover bg-center pt-14 md:pt-16 "
+        className="flex justify-center items-center min-h-screen bg-cover bg-center pt-14 md:pt-16"
         style={{ backgroundImage: "url('/soil_health.jpg')" }}
       >
         <div className="bg-white bg-opacity-50 backdrop-blur-md rounded-lg shadow-lg w-[90%] md:w-[70%] p-6 mx-4 sm:mx-0 max-h-[80vh] overflow-y-auto">
@@ -185,6 +187,7 @@ const CropRecommender = () => {
             </form>
           ) : (
             <>
+             
               {result && (
                 <div className="mt-6 p-16 bg-gray-300 h-[200px] bg-opacity-50 text-black text-4xl  rounded-xl shadow-lg text-center">
                   {result}
