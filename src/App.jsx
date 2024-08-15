@@ -4,6 +4,7 @@ import SoilHealth from './components/SoilHealth';  // Import the SoilHealth comp
 import Home from './pages/Home';
 import Crop_recommender from './components/Crop_Recommender';
 import Weather from './components/Weather';
+import FeedbackForm from './components/Feedback';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/soil-health" element={<SoilHealth />} />
         <Route path="/crop-recommend" element={<Crop_recommender/>} />
         <Route path="/weather" element={<Weather/>}/>
+        <Route path="/feedback" element={<FeedbackForm/>}/>
         {/* Add other routes here if needed */}
       </Routes>
     </Router>
