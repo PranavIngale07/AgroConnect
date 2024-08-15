@@ -35,26 +35,31 @@ const Chat = () => {
 
             {/* Chat Box */}
             {isChatOpen && (
-                <div className="fixed bottom-20 right-4 z-50 p-4 bg-white shadow-md rounded-md max-w-xs  mb-2 backdrop-blur-lg bg-opacity-35">
+                <div className="fixed bottom-20 right-4 z-50 p-4 bg-white shadow-md rounded-md max-w-xs mb-2 backdrop-blur-lg bg-opacity-35">
                     <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-t-md flex items-center">
                         <img
-                            src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" // Assuming the same icon can be used for the avatar
+                            src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png"
                             alt="Avatar"
                             className="w-8 h-8 mr-2 rounded-full"
                         />
                         <div>
-                        <span className='font-semibold text-xl'>Chat Support</span>
-                        <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+                            <span className='font-semibold text-xl'>Chat Support</span>
+                            <p className="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
                         </div>
                     </div>
                     <div className="bg-white p-4 max-h-60 overflow-y-auto border-t border-gray-300 m-auto">
                         {chatHistory.map((chat, index) => (
-                            <div key={index} className={chat.from === 'user' ? 'bg-blue-500 text-white p-2 rounded-lg mb-2' : 'bg-gray-300 text-black p-2 rounded-lg mb-2'}>
-                                {chat.text}
+                            <div
+                                key={index}
+                                className={`flex mb-2 ${chat.from === 'user' ? 'justify-end' : 'justify-start'}`}
+                            >
+                                <div className={chat.from === 'user' ? 'bg-blue-500 text-white p-2 rounded-lg max-w-xs' : 'bg-gray-300 text-black p-2 rounded-lg max-w-xs'}>
+                                    {chat.text}
+                                </div>
                             </div>
                         ))}
                     </div>
-                    <form onSubmit={handleSendMessage} className="flex  mt-2">
+                    <form onSubmit={handleSendMessage} className="flex mt-2">
                         <input
                             type="text"
                             value={userMessage}
@@ -62,7 +67,6 @@ const Chat = () => {
                             placeholder="Write a message..."
                             className="flex-grow border-0 p-2 rounded-bl-md rounded-tl-md"
                         />
-                        
                         <button type="submit" className="bg-blue-500 text-white px-4 rounded-br-md rounded-tr-md">Send</button>
                     </form>
                 </div>
