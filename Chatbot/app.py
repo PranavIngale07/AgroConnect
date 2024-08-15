@@ -12,7 +12,7 @@ import pickle
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})  # Enable CORS for your API
 
-# Initialize the device and load model
+# Initialize the device and load chatbot model
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 with open('intents.json', 'r') as json_data:
@@ -28,9 +28,9 @@ all_words = data['all_words']
 tags = data['tags']
 model_state = data["model_state"]
 
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
-model.load_state_dict(model_state)
-model.eval()
+chatbot_model = NeuralNet(input_size, hidden_size, output_size).to(device)
+chatbot_model.load_state_dict(model_state)
+chatbot_model.eval()
 
 bot_name = "Sam"
 
@@ -41,7 +41,7 @@ def get_response(msg):
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
 
-    output = model(X)
+    output = chatbot_model(X)
     _, predicted = torch.max(output, dim=1)
 
     tag = tags[predicted.item()]
@@ -105,9 +105,9 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 
-#___________________CROP RECOMENDER_______________________________
+#___________________CROP RECOMMENDER_______________________________
 # Load models and scalers
-model = pickle.load(open('model.pkl', 'rb'))
+crop_recommender_model = pickle.load(open('model.pkl', 'rb'))
 sc = pickle.load(open('standardscaler.pkl', 'rb'))
 mx = pickle.load(open('minmaxscaler.pkl', 'rb'))
 
@@ -134,7 +134,7 @@ def prediction():
         # Process features
         mx_features = mx.transform(single_pred)
         sc_mx_features = sc.transform(mx_features)
-        prediction = model.predict(sc_mx_features)
+        prediction = crop_recommender_model.predict(sc_mx_features)
 
         # Map prediction to crop
         crop_dict = {

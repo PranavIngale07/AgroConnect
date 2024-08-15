@@ -187,7 +187,7 @@ const CropRecommender = () => {
             </form>
           ) : (
             <>
-             
+
               {result && (
                 <div className="mt-6 p-16 bg-gray-300 h-[200px] bg-opacity-50 text-black text-4xl  rounded-xl shadow-lg text-center">
                   {result}
