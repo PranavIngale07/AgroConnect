@@ -16,7 +16,7 @@ const Navabr = () => {
         <Link to="/soil-health">  {/* Link to the SoilHealth route */}
           Soil Health
         </Link>
-        <Crop_Recommender />
+        <Link to="/crop-recommend">Crop Recommender</Link>
         <Advisor />
       </div>
 

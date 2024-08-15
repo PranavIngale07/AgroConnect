@@ -200,7 +200,7 @@ const SoilHealth = () => {
 
               <button
                 type="submit"
-                className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md bg-teal-600 hover:bg-teal-700 transition duration-300"
+                className="w-full text-white py-2 px-4 rounded-md bg-teal-600 hover:bg-teal-700 transition duration-300"
               >
                 Submit
               </button>

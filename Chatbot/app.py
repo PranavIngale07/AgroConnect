@@ -6,6 +6,7 @@ from flask_cors import CORS
 from model import NeuralNet
 from nltk_utils import bag_of_words, tokenize
 import numpy as np
+import pickle
 
 # Flask app initialization
 app = Flask(__name__)
@@ -102,6 +103,57 @@ def predict():
     except Exception as e:
         print("Error processing request:", e)
         return jsonify({'error': str(e)}), 500
+
+
+#___________________CROP RECOMENDER_______________________________
+# Load models and scalers
+model = pickle.load(open('model.pkl', 'rb'))
+sc = pickle.load(open('standardscaler.pkl', 'rb'))
+mx = pickle.load(open('minmaxscaler.pkl', 'rb'))
+
+@app.route('/')
+def index():
+    return "Welcome to the Crop Recommendation System!"
+
+@app.route("/crop", methods=['POST'])
+def prediction():
+    data = request.form.to_dict()  # Get form data as a dictionary
+    try:
+        # Extract features from form data
+        feature_list = [
+            data['Nitrogen'],
+            data['Phosporus'],
+            data['Potassium'],
+            data['Temperature'],
+            data['Humidity'],
+            data['pH'],
+            data['Rainfall']
+        ]
+        single_pred = np.array(feature_list).reshape(1, -1)
+
+        # Process features
+        mx_features = mx.transform(single_pred)
+        sc_mx_features = sc.transform(mx_features)
+        prediction = model.predict(sc_mx_features)
+
+        # Map prediction to crop
+        crop_dict = {
+            1: 'Rice', 2: 'Maize', 3: 'Chickpea', 4: 'Kidneybeans',
+            5: 'Pigeonpeas', 6: 'Mothbeans', 7: 'Mungbean', 8: 'Blackgram',
+            9: 'Lentil', 10: 'Pomegranate', 11: 'Banana', 12: 'Mango',
+            13: 'Grapes', 14: 'Watermelon', 15: 'Muskmelon', 16: 'Apple',
+            17: 'Orange', 18: 'Papaya', 19: 'Coconut', 20: 'Cotton',
+            21: 'Jute', 22: 'Coffee'
+        }
+
+        # Get the crop name
+        crop = crop_dict.get(prediction[0], "Unknown crop")
+        result = f"{crop} is the best crop to be cultivated right there."
+        
+        return jsonify(result=result)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
 
 # Run the Flask app
 if __name__ == "__main__":
