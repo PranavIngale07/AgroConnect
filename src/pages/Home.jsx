@@ -13,10 +13,11 @@ const Home = () => {
           alt=""
           className="object-cover w-full h-full opacity-90"
         />
-        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 mt-28">
+        {/* Centering the Card both horizontally and vertically */}
+        <div className="absolute inset-0 top-20 flex items-center justify-center">
           <Card />  {/* Add the Card component here */}
         </div>
-        <div className="absolute bottom-0 right-0 m-4">
+        <div className="absolute bottom-4 right-4">
           <Chat />
         </div>
       </div>
