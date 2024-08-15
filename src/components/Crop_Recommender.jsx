@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Navabr from "./Navabr";  // Ensure the correct import name
+import farmer from '/farmer.png'; // Make sure to import the chat icon
 
 const CropRecommender = () => {
   const [formData, setFormData] = useState({
@@ -61,7 +62,7 @@ const CropRecommender = () => {
         className="flex justify-center items-center min-h-screen bg-cover bg-center pt-14 md:pt-16"
         style={{ backgroundImage: "url('/soil_health.jpg')" }}
       >
-        <div className="bg-white bg-opacity-50 backdrop-blur-md rounded-lg shadow-lg w-[90%] md:w-[70%] p-6 mx-4 sm:mx-0 max-h-[80vh] overflow-y-auto">
+        <div className="glassCard bg-white bg-opacity-25 backdrop-blur-md rounded-lg shadow-lg w-[90%] md:w-[70%] p-6 mx-4 sm:mx-0 max-h-[80vh] overflow-y-auto">
           <p className="font-bold text-xl md:text-2xl mb-4 text-center text-black">
             Crop Recommender
           </p>
@@ -73,7 +74,7 @@ const CropRecommender = () => {
             >
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     pH:
                   </span>
                   <input
@@ -88,7 +89,7 @@ const CropRecommender = () => {
               </div>
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     Rainfall:
                   </span>
                   <input
@@ -103,7 +104,7 @@ const CropRecommender = () => {
               </div>
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     Humidity:
                   </span>
                   <input
@@ -118,7 +119,7 @@ const CropRecommender = () => {
               </div>
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     Nitrogen (N ppm):
                   </span>
                   <input
@@ -133,7 +134,7 @@ const CropRecommender = () => {
               </div>
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     Phosphorus (P ppm):
                   </span>
                   <input
@@ -148,7 +149,7 @@ const CropRecommender = () => {
               </div>
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     Potassium (K ppm):
                   </span>
                   <input
@@ -163,7 +164,7 @@ const CropRecommender = () => {
               </div>
               <div>
                 <label className="form-control w-full">
-                  <span className="label-text text-left block mb-1 text-black">
+                  <span className="label-text text-left block mb-1 text-black font-semibold text-lg">
                     Temperature:
                   </span>
                   <input
@@ -195,6 +196,15 @@ const CropRecommender = () => {
               )}
             </>
           )}
+
+<div className="fixed bottom-1 right-1 z-50">
+                <img
+                    src={farmer}
+                    alt="Chat"
+                    onClick={() => setIsChatOpen(!isChatOpen)}
+                    className="cursor-pointer w-[9rem] h-[9rem]"
+                />
+            </div>
         </div>
       </div>
     </>

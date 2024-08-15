@@ -3,7 +3,7 @@ import React from "react";
 
 const Card = () => {
   return (
-    <div className="bg-white bg-opacity-30 border-none outline-none rounded-lg shadow-lg p-6 w-[500px] h-[500px]">
+    <div className="bg-white bg-opacity-30 border-none outline-none rounded-xl shadow-lg p-6 w-[500px] h-[500px]">
       <h2 className="text-4xl font-bold text-center text-black m-auto">
         Towards a better future
       </h2>
